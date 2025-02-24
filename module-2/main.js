@@ -1,17 +1,19 @@
 const express = require("express");
 const fetch = require("node-fetch");
+const path = require("path");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware to parse form data
 app.use(express.urlencoded({ extended: true }));
 
 // Set EJS as the template engine
 app.set("view engine", "ejs");
+app.set('views', path.join(__dirname, 'views'));
 
 //Serve static files from the views folder
-app.use(express.static("views"));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Route to render the input form
 app.get("/", (req, res) => {
