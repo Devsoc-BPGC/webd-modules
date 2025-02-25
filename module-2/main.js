@@ -1,12 +1,17 @@
 const express = require("express");
 const fetch = require("node-fetch");
 const path = require("path");
+const cors = require("cors");
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware to parse form data
 app.use(express.urlencoded({ extended: true }));
+
+//Midleware to ensure correct url in the API hitup
+app.use(cors());
 
 // Set EJS as the template engine
 app.set("view engine", "ejs");
@@ -17,7 +22,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Route to render the input form
 app.get("/", (req, res) => {
-    res.render("index", { userData: null, error: null });
+    //res.render("index", { userData: null, error: null });
+    res.sendFile(path.join(__dirname, 'views', 'index.ejs'));
 });
 
 // Route to handle the GitHub API request
